@@ -91,3 +91,54 @@ exports.deleteUser = (req, res, next) => {
       });
     });
 };
+<<<<<<< HEAD
+=======
+
+
+// // // find one user
+// // exports.findOne = (req, res, next) => {
+// //   User.findOne({ where: { id: req.params.id } })
+// //     .then((user) => res.status(200).json({ user }))
+// //     .catch((error) => res.status(404).json({ error }));
+// // };
+
+// // // find all users
+// // exports.findAll = (req, res, next) => {
+// //   User.findAll()
+// //     .then((users) => {
+// //       res.status(200).json(users);
+// //     })
+// //     .catch((error) => {
+// //       console.log(error.stack);
+// //       res.status(400).json({
+// //         error: error.message || error,
+// //       });
+// //     });
+// // };
+
+
+// // exports.updateUser =  async (req, res) => {
+// //   const { userId } = req.params;
+// //   const { name, occupation, profilePhoto } = req.body;
+
+// //   try {
+// //     const user = await User.findById(userId);
+
+// //     if (!user) {
+// //       return res.status(404).json({ message: 'User not found' });
+// //     }
+
+//     // Update user properties
+//     user.name = name || user.name;
+//     user.occupation = occupation || user.occupation;
+//     user.profilePhoto = profilePhoto || user.profilePhoto;
+
+//     await user.save();
+
+//     res.status(200).json({ message: 'User profile updated successfully', user });
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({ message: 'Server error' });
+//   }
+// };
+>>>>>>> 09845a3eaf7551a582a729da5a723957f2a04d70

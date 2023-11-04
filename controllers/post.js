@@ -31,9 +31,13 @@ exports.getOne = async (req, res) => {
   }
 };
 
+<<<<<<< HEAD
 
 
 //create post
+=======
+// //create post (this one was working)
+>>>>>>> 09845a3eaf7551a582a729da5a723957f2a04d70
 exports.createPost = async (req, res) => {
   try {
     if (req.file != null) {
@@ -49,6 +53,7 @@ exports.createPost = async (req, res) => {
         mediaUrl: url + "/images/" + req.file.filename,
         usersRead: [],
       };
+<<<<<<< HEAD
       console.log("Data being inserted:", postData);
 
       // Inserting the data into the database
@@ -56,6 +61,22 @@ exports.createPost = async (req, res) => {
       res.status(201).json(post);
     } else {
     const postObject = req.body;
+=======
+
+      // Log the data before the insertion
+      console.log("Data being inserted:", postData);
+
+      // Insert the data into the database
+      const post = await Post.create(postData);
+
+      // If the insertion is successful, send a success response
+      res.status(201).json(post);
+    } else {
+      // Handle the case when there's no file attached
+      // This part assumes the case when `req.file` is not present
+      // Insert the post data without mediaUrl
+      const postObject = req.body;
+>>>>>>> 09845a3eaf7551a582a729da5a723957f2a04d70
       const postData = {
         userId: postObject.userId,
         mediaUrl: null,
@@ -63,6 +84,7 @@ exports.createPost = async (req, res) => {
         message: postObject.message,
         usersRead: [postObject.userId],
       };
+<<<<<<< HEAD
       // console.log("Data being inserted:", postData);
       // Inserting the data into the database
       const post = await Post.create(postData);
@@ -70,6 +92,23 @@ exports.createPost = async (req, res) => {
     }
   } catch (error) {
     console.error("Error:", error);
+=======
+
+      // Log the data before the insertion
+      console.log("Data being inserted:", postData);
+
+      // Insert the data into the database
+      const post = await Post.create(postData);
+
+      // If the insertion is successful, send a success response
+      res.status(201).json(post);
+    }
+  } catch (error) {
+    // Log the specific error details for debugging
+    console.error("Error:", error);
+
+    // Send an error response to the client
+>>>>>>> 09845a3eaf7551a582a729da5a723957f2a04d70
     res.status(400).json({
       error: error.message || error,
     });
@@ -77,6 +116,7 @@ exports.createPost = async (req, res) => {
 };
 
 
+<<<<<<< HEAD
 
 
 
@@ -84,12 +124,22 @@ exports.userRead = async (req, res) => {
   const userId = parseInt(req.body.userId); 
 
   try {
+=======
+// users read array handling
+exports.userRead = async (req, res) => {
+  try {
+    let userId = req.body.postUserId;
+    userId = userId.replace(/^"|"$/g, '');  // Ensure no extra quotes
+
+    // Fetch post
+>>>>>>> 09845a3eaf7551a582a729da5a723957f2a04d70
     const post = await Post.findOne({
       where: {
         id: req.params.id,
       },
     });
 
+<<<<<<< HEAD
     if (!post) {
       return res.status(400).json({
         error: "No post found with the specified ID",
@@ -111,6 +161,36 @@ exports.userRead = async (req, res) => {
       });
     }
   } catch (error) {
+=======
+    // If no post found, return a 400 error
+    if (!post) {
+      return res.status(400).json({
+        error: "No post found",
+      });
+    }
+
+    // Parse the stringified array
+    const parsedUsersRead = JSON.parse(post.usersRead);
+    const usersRead = [...parsedUsersRead];
+
+    // Check if user has already read the post
+    if (!usersRead.includes(userId)) {
+      usersRead.push(userId);
+
+      await post.update({ usersRead });
+      await post.save();
+
+      return res.status(200).json({
+        success: "Post read",
+      });
+    } else {
+      return res.status(304).json({
+        message: "Post already read by user",
+      });
+    }
+  } catch (error) {
+    console.error("Error reading post:", error.message);
+>>>>>>> 09845a3eaf7551a582a729da5a723957f2a04d70
     return res.status(500).json({
       error: "An error occurred while processing your request.",
     });
@@ -119,5 +199,8 @@ exports.userRead = async (req, res) => {
 
 
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 09845a3eaf7551a582a729da5a723957f2a04d70
